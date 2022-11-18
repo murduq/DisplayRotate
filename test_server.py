@@ -14,12 +14,14 @@ class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
         orient = 0
         if 'land' in str(post_body):
             orient = 0
+            pos = 270
         elif 'port' in str(post_body):
             orient = 270
+            pos = -270
         # if 'flip' in str(post_body):
         #     orient += 180
         print(os.getcwd())
-        os.system(rf'DisplayRotate\display64.exe /device 2 /rotate {str(orient)}')
+        os.system(rf'DisplayRotate\display64.exe /device 2 /rotate {str(orient)} /position 0 {str(pos)}')
         
         self.send_response(200)
         self.end_headers()
