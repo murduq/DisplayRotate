@@ -17,7 +17,7 @@ class MyHttpRequestHandler(http.server.SimpleHTTPRequestHandler):
             pos = 270
         elif 'port' in str(post_body):
             orient = 270
-            pos = -270
+            pos = -250
         # if 'flip' in str(post_body):
         #     orient += 180
         print(os.getcwd())
