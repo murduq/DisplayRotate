@@ -385,15 +385,24 @@ if __name__ == '__main__':
   import screen_rotate
   import network
   import urequests
+  print('script begin')
+  
+  with open('creds.txt') as f:
+      print('reading creds')
+      creds = f.read().splitlines()
+      ssid=creds[0]
+      key=creds[1]
+      ip=creds[2]
+      port=creds[3]
   
   wifi = network.WLAN(network.STA_IF)
   wifi.active(True)
-  wifi.connect('Verizon_773VVX','cub7-put-argo')
+  wifi.connect(ssid,key)
   time.sleep(3)
-  while not wifi.isconnected():
-    print('connecting...')
-    wifi.connect('Verizon_773VVX','cub7-put-argo')
-    time.sleep(1)
+  #while not wifi.isconnected():
+   # print('connecting...')
+    #wifi.connect(ssid,key)
+    #time.sleep(1)
   print('connected')
   print(wifi.ifconfig())
   
@@ -401,7 +410,7 @@ if __name__ == '__main__':
   MotionVal=[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
   icm20948=ICM20948()
   
-  last_orient = ''
+  last_orient = 'land'
   while True:
     icm20948.icm20948_Gyro_Accel_Read()
     icm20948.icm20948MagRead()
@@ -426,12 +435,8 @@ if __name__ == '__main__':
     else:
         curr_orient = last_orient
     if last_orient != curr_orient:
-        screen_rotate.set_orient(curr_orient)
+        screen_rotate.set_orient(ip,port,curr_orient)
         last_orient = curr_orient
-    
-    
-
-
-
-       
+    if not wifi.isconnected():
+        screen_rotate.find_server(ip, port)
     
