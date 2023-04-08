@@ -1,3 +1,5 @@
 
 creds.txt
 .gitattributes
+*.exe
+display_test.ipynb
